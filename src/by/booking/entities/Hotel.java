@@ -8,10 +8,6 @@ public class Hotel {
     private String name;
     private String status;
 
-    public long getId() {
-        return id;
-    }
-
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
@@ -21,8 +17,7 @@ public class Hotel {
 
         if (id != hotel.id) return false;
         if (!country.equals(hotel.country)) return false;
-        if (!city.equals(hotel.city)) return false;
-        return status != null ? status.equals(hotel.status) : hotel.status == null;
+        return city.equals(hotel.city);
 
     }
 
@@ -32,8 +27,12 @@ public class Hotel {
         result = 31 * result + country.hashCode();
         result = 31 * result + city.hashCode();
         result = 31 * result + (name != null ? name.hashCode() : 0);
-        result = 31 * result + (status != null ? status.hashCode() : 0);
+        result = 31 * result + status.hashCode();
         return result;
+    }
+
+    public long getId() {
+        return id;
     }
 
     public void setId(long id) {
