@@ -6,30 +6,8 @@ public class Hotel {
     private String country;
     private String city;
     private String name;
+    private double discount;
     private String status;
-
-    @Override
-    public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
-
-        Hotel hotel = (Hotel) o;
-
-        if (id != hotel.id) return false;
-        if (!country.equals(hotel.country)) return false;
-        return city.equals(hotel.city);
-
-    }
-
-    @Override
-    public int hashCode() {
-        int result = (int) (id ^ (id >>> 32));
-        result = 31 * result + country.hashCode();
-        result = 31 * result + city.hashCode();
-        result = 31 * result + (name != null ? name.hashCode() : 0);
-        result = 31 * result + status.hashCode();
-        return result;
-    }
 
     public long getId() {
         return id;
@@ -61,6 +39,14 @@ public class Hotel {
 
     public void setName(String name) {
         this.name = name;
+    }
+
+    public double getDiscount() {
+        return discount;
+    }
+
+    public void setDiscount(double discount) {
+        this.discount = discount;
     }
 
     public String getStatus() {

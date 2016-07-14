@@ -2,6 +2,7 @@ package by.booking.services.impl;
 
 import by.booking.constants.Messages;
 import by.booking.dao.impl.BillDao;
+import by.booking.dto.BillDto;
 import by.booking.entities.Bill;
 import by.booking.exceptions.DaoException;
 import by.booking.exceptions.ServiceException;
@@ -55,6 +56,9 @@ public class BillServiceImpl implements IBillService {
         Bill bill = null;
         try {
             connection.setAutoCommit(false);
+            billDto = BillDao.getInstance().getById(id);
+            List<Long> roomsIds = billDto.getRoomsIds();
+
             bill = BillDao.getInstance().getById(id);
             connection.commit();
             BookingSystemLogger.getInstance().logError(getClass(), Messages.TRANSACTION_SUCCEEDED);
@@ -103,5 +107,27 @@ public class BillServiceImpl implements IBillService {
             throw new ServiceException(e.getMessage());
         }
         return bills;
+    }
+
+
+    @Override
+    public Bill getById(long id) throws SQLException, ServiceException {
+        Connection connection = ConnectionUtil.getConnection();
+        Bill bill = null;
+        try {
+            connection.setAutoCommit(false);
+            BillDto billDto = BillDao.getInstance().getById(id);
+            List<Long> roomsIds = billDto.getRoomsIds();
+
+            bill = BillDao.getInstance().getById(id);
+            connection.commit();
+            BookingSystemLogger.getInstance().logError(getClass(), Messages.TRANSACTION_SUCCEEDED);
+        }
+        catch (SQLException | DaoException e) {
+            connection.rollback();
+            BookingSystemLogger.getInstance().logError(getClass(), Messages.TRANSACTION_FAILED);
+            throw new ServiceException(e.getMessage());
+        }
+        return bill;
     }
 }

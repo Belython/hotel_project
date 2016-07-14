@@ -15,28 +15,19 @@ public class BillDao implements IBillDao{
     private static BillDao instance = null;
 
     private final String ADD_QUERY = "INSERT INTO BILLS (" +
-            "ORDER_ID, ROOM_ID, PAYMENT_AMOUNT, BILL_STATUS)" +
-            "VALUES(?, ?, ?, ?)";
-    private final String GET_BY_ID_QUERY = "SELECT B.*, O.*, R.*, U.*, RT.*, H.*, L.*"+
+            "USER_ID, TOTAL_PERSONS, CHECK_IN_DATE, CHECK_OUT_DATE, ROOM_ID_LIST, PAYMENT_AMOUNT, BILL_STATUS)" +
+            "VALUES(?, ?, ?, ?, ?, ?, ?)";
+    private final String GET_BY_ID_QUERY = "SELECT B.*, U.* " +
             "FROM BILLS B " +
-            "JOIN ORDERS O ON B.ORDER_ID = O.ORDER_ID " +
-            "JOIN ROOMS R ON B.ROOM_ID = R.ROOM_ID " +
-            "JOIN USERS U ON O.USER_ID = U.USER_ID " +
-            "JOIN ROOMS_TYPES RT ON R.ROOM_TYPE_ID = RT.ROOM_TYPE_ID " +
-            "JOIN HOTELS H ON R.HOTEL_ID = H.HOTEL_ID " +
-            "JOIN LOCATIONS L ON H.LOCATION_ID = L.LOCATION_ID " +
+            "JOIN USERS U ON B.USER_ID = U.USER_ID " +
             "WHERE B.BILL_ID = ?";
-    private final String GET_BY_USER_ID_QUERY = "SELECT B.*, O.*, R.*, U.*, RT.*, H.*, L.*"+
+    private final String GET_BY_USER_ID_QUERY = "SELECT B.*, U.* " +
             "FROM BILLS B " +
-            "JOIN ORDERS O ON B.ORDER_ID = O.ORDER_ID " +
-            "JOIN ROOMS R ON B.ROOM_ID = R.ROOM_ID " +
-            "JOIN USERS U ON O.USER_ID = U.USER_ID " +
-            "JOIN ROOMS_TYPES RT ON R.ROOM_TYPE_ID = RT.ROOM_TYPE_ID " +
-            "JOIN HOTELS H ON R.HOTEL_ID = H.HOTEL_ID " +
-            "JOIN LOCATIONS L ON H.LOCATION_ID = L.LOCATION_ID " +
+            "JOIN USERS U ON B.USER_ID = U.USER_ID " +
             "WHERE U.USER_ID = ?";
     private final String UPDATE_QUERY = "UPDATE BILLS " +
-            "SET ORDER_ID = ?, ROOM_ID = ?, PAYMENT_AMOUNT = ?, BILL_STATUS = ?" +
+            "SET USER_ID = ?, TOTAL_PERSONS = ?, CHECK_IN_DATE = ?, CHECK_OUT_DATE = ?, ROOM_ID_LIST = ?, " +
+            "PAYMENT_AMOUNT = ?, BILL_STATUS = ?" +
             "WHERE BILL_ID = ?;";
     private final String DELETE_QUERY = "UPDATE BILLS SET STATUS = 'deleted' WHERE ID = ?";
 
@@ -54,12 +45,14 @@ public class BillDao implements IBillDao{
     public Bill add(Bill bill) throws DaoException {
         Connection connection = ConnectionUtil.getConnection();
         ResultSet resultSet = null;
-        try (PreparedStatement stm = connection.prepareStatement(ADD_QUERY,
-                Statement.RETURN_GENERATED_KEYS)) {
-            stm.setLong(1, bill.getOrder().getId());
-            stm.setLong(2, bill.getRoom().getId());
-            stm.setInt(3, bill.getPaymentAmount());
-            stm.setString(4, bill.getStatus());
+        try (PreparedStatement stm = connection.prepareStatement(ADD_QUERY, Statement.RETURN_GENERATED_KEYS)) {
+            stm.setLong(1, bill.getUser().getId());
+            stm.setInt(2, bill.getTotalPersons());
+            stm.setLong(3, bill.getCheckInDate());
+            stm.setLong(4, bill.getCheckOutDate());
+            stm.setBlob(5, SerializationUtil.serialize(bill.getRoomIdList()));
+            stm.setInt(6, bill.getPaymentAmount());
+            stm.setString(7, bill.getStatus());
             stm.executeUpdate();
             resultSet = stm.getGeneratedKeys();
             resultSet.next();
@@ -81,7 +74,7 @@ public class BillDao implements IBillDao{
             stm.setLong(1, id);
             ResultSet resultSet = stm.executeQuery();
             resultSet.next();
-            bill = EntityBuilder.parseBill(resultSet);
+            bill = EntityParser.parseBill(resultSet);
         } catch (SQLException e) {
             BookingSystemLogger.getInstance().logError(getClass(), Messages.GET_BILL_EXCEPTION);
             throw new DaoException(Messages.GET_BILL_EXCEPTION, e);
@@ -102,7 +95,7 @@ public class BillDao implements IBillDao{
             stm.setLong(1, userId);
             ResultSet resultSet = stm.executeQuery();
             while (resultSet.next()) {
-                bills.add(EntityBuilder.parseBill(resultSet));
+                bills.add(EntityParser.parseBill(resultSet));
             }
         } catch (SQLException e) {
             BookingSystemLogger.getInstance().logError(getClass(), Messages.GET_BILL_EXCEPTION);
@@ -114,11 +107,13 @@ public class BillDao implements IBillDao{
     public void update(Bill bill) throws DaoException{
         Connection connection = ConnectionUtil.getConnection();
         try (PreparedStatement stm = connection.prepareStatement(UPDATE_QUERY)) {
-            stm.setLong(1, bill.getOrder().getId());
-            stm.setLong(2, bill.getRoom().getId());
-            stm.setInt(3, bill.getPaymentAmount());
-            stm.setString(4, bill.getStatus());
-            stm.setLong(5, bill.getId());
+            stm.setLong(1, bill.getUser().getId());
+            stm.setInt(2, bill.getTotalPersons());
+            stm.setLong(3, bill.getCheckInDate());
+            stm.setLong(4, bill.getCheckOutDate());
+            stm.setBlob(5, SerializationUtil.serialize(bill.getRoomIdList()));
+            stm.setInt(6, bill.getPaymentAmount());
+            stm.setString(7, bill.getStatus());
             stm.executeUpdate();
         } catch (SQLException e) {
             BookingSystemLogger.getInstance().logError(getClass(), Messages.GET_BILL_EXCEPTION);

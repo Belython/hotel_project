@@ -10,6 +10,7 @@ import by.booking.exceptions.DaoException;
 
 import java.sql.*;
 import java.util.ArrayList;
+import java.util.Iterator;
 import java.util.List;
 
 public class RoomDao implements IRoomDao{
@@ -48,9 +49,13 @@ public class RoomDao implements IRoomDao{
             "ORDER BY R.ROOM_NUMBER ASC";
     private final String UPDATE_QUERY = "UPDATE ROOMS SET HOTEL_ID = ?, ROOM_TYPE_ID = ?, ROOM_NUMBER = ?," +
             " BOOKING_START_DATE = ?, BOOKING_END_DATE = ?, ROOM_STATUS = ? WHERE ROOM_ID = ?";
+    private final String GET_BY_LIST_ID_QUERY = "SELECT R.*, RT.*, H.*, L.* " +
+            "FROM ROOMS R " +
+            "JOIN ROOMS_TYPES RT ON R.ROOM_TYPE_ID = RT.ROOM_TYPE_ID " +
+            "JOIN HOTELS H ON R.HOTEL_ID = H.HOTEL_ID " +
+            "JOIN LOCATIONS L ON H.LOCATION_ID = L.LOCATION_ID " +
+            "WHERE R.ROOM_ID IN (parameters)";
     private final String DELETE_QUERY = "UPDATE ORDERS SET STATUS = 'deleted' WHERE ID = ?";
-
-
 
     private RoomDao() {
     }
@@ -95,14 +100,13 @@ public class RoomDao implements IRoomDao{
             stm.setLong(1, id);
             ResultSet resultSet = stm.executeQuery();
             resultSet.next();
-            room = EntityBuilder.parseRoom(resultSet);
+            room = EntityParser.parseRoom(resultSet);
         } catch (SQLException e) {
             BookingSystemLogger.getInstance().logError(getClass(), Messages.GET_ROOM_EXCEPTION);
             throw new DaoException(Messages.GET_ROOM_EXCEPTION, e);
         }
         return room;
     }
-
 
     @Override
     public List<Room> getAll() throws DaoException{
@@ -143,7 +147,7 @@ public class RoomDao implements IRoomDao{
             stm.setLong(6, orderDto.getCheckOutDate());
             ResultSet resultSet = stm.executeQuery();
             while (resultSet.next()) {
-                rooms.add(EntityBuilder.parseRoom(resultSet));
+                rooms.add(EntityParser.parseRoom(resultSet));
             }
         } catch (SQLException e) {
             BookingSystemLogger.getInstance().logError(getClass(), Messages.GET_ROOM_EXCEPTION);
@@ -159,7 +163,7 @@ public class RoomDao implements IRoomDao{
             stm.setLong(1, hotelId);
             ResultSet resultSet = stm.executeQuery();
             while (resultSet.next()) {
-                rooms.add(EntityBuilder.parseRoom(resultSet));
+                rooms.add(EntityParser.parseRoom(resultSet));
             }
         } catch (SQLException e) {
             BookingSystemLogger.getInstance().logError(getClass(), Messages.GET_ROOM_EXCEPTION);
@@ -168,27 +172,55 @@ public class RoomDao implements IRoomDao{
         return rooms;
     }
 
-    public List<Room> getByOrder(Order order) throws DaoException{
-        List<Room> rooms = new ArrayList<>();
+//    public List<Room> getByOrder(Order order) throws DaoException{
+//        List<Room> rooms = new ArrayList<>();
+//        Connection connection = ConnectionUtil.getConnection();
+//        try (PreparedStatement stm = connection.prepareStatement(GET_BY_ORDER_QUERY)) {
+//            stm.setString(1, order.getHotel().getCountry());
+//            stm.setString(2, order.getHotel().getCity());
+//            stm.setString(3, order.getHotel().getName());
+//            stm.setLong(4, order.getRoomType().getId());
+//            stm.setLong(5, order.getCheckInDate());
+//            stm.setLong(6, order.getCheckOutDate());
+//            ResultSet resultSet = stm.executeQuery();
+//            while (resultSet.next()) {
+//                rooms.add(Entio.parseRoom(resultSet));
+//            }
+//        } catch (SQLException e) {
+//            BookingSystemLogger.getInstance().logError(getClass(), Messages.GET_ROOM_EXCEPTION);
+//            throw new DaoException(Messages.GET_ROOM_EXCEPTION, e);
+//        }
+//        return rooms;
+//    }
+
+    public List<Room> getByListId(List<Long> idList) throws DaoException{
+        List<Room> roomList = new ArrayList<>();
         Connection connection = ConnectionUtil.getConnection();
-        try (PreparedStatement stm = connection.prepareStatement(GET_BY_ORDER_QUERY)) {
-            stm.setString(1, order.getHotel().getCountry());
-            stm.setString(2, order.getHotel().getCity());
-            stm.setString(3, order.getHotel().getName());
-            stm.setLong(4, order.getRoomType().getId());
-            stm.setLong(5, order.getCheckInDate());
-            stm.setLong(6, order.getCheckOutDate());
+        final String GET_BY_LIST_ID_FINISHED_QUERY = getFinishedQuery(GET_BY_LIST_ID_QUERY, idList);
+        try (PreparedStatement stm = connection.prepareStatement(GET_BY_LIST_ID_FINISHED_QUERY)) {
             ResultSet resultSet = stm.executeQuery();
             while (resultSet.next()) {
-                rooms.add(EntityBuilder.parseRoom(resultSet));
+                Room room = EntityParser.parseRoom(resultSet);
+                roomList.add(room);
             }
         } catch (SQLException e) {
             BookingSystemLogger.getInstance().logError(getClass(), Messages.GET_ROOM_EXCEPTION);
             throw new DaoException(Messages.GET_ROOM_EXCEPTION, e);
         }
-        return rooms;
+        return roomList;
     }
 
+    private String getFinishedQuery(String initialQuery, List<Long> parametersList) {
+        StringBuilder buffer = new StringBuilder();
+        String regex = "parameters";
+        Iterator<Long> iterator = parametersList.listIterator();
+        buffer.append(iterator.next());
+        while (iterator.hasNext()) {
+            buffer.append("," + iterator.next());
+        }
+        String finishedQuery = initialQuery.replace(regex, buffer.toString());
+        return finishedQuery;
+    }
 
 
 

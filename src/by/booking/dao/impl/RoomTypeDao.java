@@ -67,7 +67,7 @@ public class RoomTypeDao implements IRoomTypeDao {
             stm.setLong(1, id);
             ResultSet resultSet = stm.executeQuery();
             resultSet.next();
-            roomType = EntityBuilder.parseRoomType(resultSet);
+            roomType = EntityParser.parseRoomType(resultSet);
         } catch (SQLException e) {
             BookingSystemLogger.getInstance().logError(getClass(), Messages.GET_ROOM_EXCEPTION);
             throw new DaoException(Messages.GET_ROOM_EXCEPTION, e);
@@ -82,7 +82,7 @@ public class RoomTypeDao implements IRoomTypeDao {
         try (PreparedStatement stm = connection.prepareStatement(GET_ALL_QUERY)) {
             ResultSet resultSet = stm.executeQuery();
             while (resultSet.next()) {
-                roomTypes.add(EntityBuilder.parseRoomType(resultSet));
+                roomTypes.add(EntityParser.parseRoomType(resultSet));
             }
         } catch (SQLException e) {
             BookingSystemLogger.getInstance().logError(getClass(), Messages.GET_ROOM_EXCEPTION);

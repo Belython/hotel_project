@@ -1,8 +1,5 @@
 package by.booking.constants;
 
-/**
- * Created by Дмитрий on 18.06.2016.
- */
 public class ColumnName {
 
     public static final String USER_ID = "USER_ID";
@@ -15,19 +12,13 @@ public class ColumnName {
     public static final String USER_STATUS = "USER_STATUS";
 
     public static final String BILL_ID = "BILL_ID";
-    public static final String BILL_ORDER_ID = "ORDER_ID";
-    public static final String BILL_ROOM_ID = "ROOM_ID";
+    public static final String BILL_USER_ID = "USER_ID";
+    public static final String BILL_TOTAL_PERSONS = "TOTAL_PERSONS";
+    public static final String BILL_CHECK_IN_DATE = "CHECK_IN_DATE";
+    public static final String BILL_CHECK_OUT_DATE = "CHECK_OUT_DATE";
+    public static final String BILL_ROOM_ID_LIST = "ROOMS_IDS";
     public static final String BILL_PAYMENT_AMOUNT = "PAYMENT_AMOUNT";
     public static final String BILL_STATUS = "BILL_STATUS";
-
-    public static final String ORDER_ID = "ORDER_ID";
-    public static final String ORDER_USER_ID = "USER_ID";
-    public static final String ORDER_HOTEL_ID = "HOTEL_ID";
-    public static final String ORDER_ROOM_TYPE_ID = "ROOM_TYPE_ID";
-    public static final String ORDER_TOTAL_PERSONS = "TOTAL_PERSONS";
-    public static final String ORDER_CHECK_IN_DATE = "CHECK_IN_DATE";
-    public static final String ORDER_CHECK_OUT_DATE = "CHECK_OUT_DATE";
-    public static final String ORDER_STATUS = "ORDER_STATUS";
 
     public static final String LOCATION_ID = "LOCATION_ID";
     public static final String LOCATION_COUNTRY = "COUNTRY";
