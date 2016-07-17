@@ -64,7 +64,7 @@ public class MakeOrderCommand implements ICommand{
             int pricePerNight = order.getRoomType().getRoomPricePerNight();
             int bookingDays = LocalizationUtil.getDays(checkInDate, checkOutDate);
             int paymentAmount = bookingDays * pricePerNight;
-            List<Room> rooms = RoomServiceImpl.getInstance().getByOrder(order);
+            List<Room> rooms = RoomServiceImpl.getInstance().getByBill(order);
             // TODO: 28.06.2016 придумать логику выбора конкретного номера
             Room room = rooms.get(0);
             Bill bill = EntityBuilder.buildNewBill(paymentAmount, order, room);

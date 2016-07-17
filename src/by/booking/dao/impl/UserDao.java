@@ -70,7 +70,7 @@ public class UserDao implements IUserDao {
             stm.setLong(1, id);
             resultSet = stm.executeQuery();
             resultSet.next();
-            user = EntityBuilder.parseUser(resultSet);
+            user = EntityParser.parseUser(resultSet);
         } catch (SQLException e) {
             BookingSystemLogger.getInstance().logError(getClass(), Messages.GET_USER_EXCEPTION);
             throw new DaoException(Messages.GET_USER_EXCEPTION, e);
@@ -88,7 +88,7 @@ public class UserDao implements IUserDao {
             stm.setString(1, login);
             resultSet = stm.executeQuery();
             resultSet.next();
-            user = EntityBuilder.parseUser(resultSet);
+            user = EntityParser.parseUser(resultSet);
         } catch (SQLException e) {
             BookingSystemLogger.getInstance().logError(getClass(), Messages.GET_USER_EXCEPTION);
             throw new DaoException(Messages.GET_USER_EXCEPTION, e);

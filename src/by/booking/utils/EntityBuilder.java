@@ -85,19 +85,13 @@ public class EntityBuilder {
 
     public static Bill buildBill(long billId, User user, int totalPersons, long checkInDate, long checkOutDate,
                                  List<Long> roomIdList, int paymentAmount, String billStatus) {
-        List<Room> roomList = new ArrayList<>();
-        for (Long roomId: roomIdList) {
-            Room room = new Room();
-            room.setId(roomId);
-            roomList.add(room);
-        }
         Bill bill = new Bill();
         bill.setId(billId);
         bill.setUser(user);
         bill.setTotalPersons(totalPersons);
         bill.setCheckInDate(checkInDate);
         bill.setCheckOutDate(checkOutDate);
-        bill.setRoomList(roomList);
+        bill.setRoomIdList(roomIdList);
         bill.setPaymentAmount(paymentAmount);
         bill.setStatus(billStatus);
         return bill;
@@ -108,13 +102,13 @@ public class EntityBuilder {
         return bill;
     }
 
-    public static Bill buildNewBill(int paymentAmount, Order order, Room room) {
-        Bill bill = new Bill();
-        bill.setPaymentAmount(paymentAmount);
-        bill.setOrder(order);
-        bill.setRoom(room);
-        bill.setStatus(Statuses.BILL_NOT_PAID);
-        return bill;
-    }
+//    public static Bill buildNewBill(int paymentAmount, Order order, Room room) {
+//        Bill bill = new Bill();
+//        bill.setPaymentAmount(paymentAmount);
+//        bill.setOrder(order);
+//        bill.setRoom(room);
+//        bill.setStatus(Statuses.BILL_NOT_PAID);
+//        return bill;
+//    }
 
 }

@@ -3,7 +3,6 @@
   <component name="SqlDialectMappings">
     <file url="file://$PROJECT_DIR$/src/by/booking/dao/impl/BillDao.java" dialect="MySQL" />
     <file url="file://$PROJECT_DIR$/src/by/booking/dao/impl/HotelDao.java" dialect="MySQL" />
-    <file url="file://$PROJECT_DIR$/src/by/booking/dao/impl/OrderDao.java" dialect="MySQL" />
     <file url="file://$PROJECT_DIR$/src/by/booking/dao/impl/RoomDao.java" dialect="MySQL" />
     <file url="file://$PROJECT_DIR$/src/by/booking/dao/impl/RoomTypeDao.java" dialect="MySQL" />
     <file url="file://$PROJECT_DIR$/src/by/booking/dao/impl/UserDao.java" dialect="MySQL" />

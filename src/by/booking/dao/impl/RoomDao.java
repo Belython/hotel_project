@@ -3,6 +3,7 @@ package by.booking.dao.impl;
 import by.booking.constants.Messages;
 import by.booking.dao.interfaces.IRoomDao;
 import by.booking.dto.OrderDto;
+import by.booking.entities.Bill;
 import by.booking.entities.Order;
 import by.booking.entities.Room;
 import by.booking.utils.*;
@@ -172,28 +173,7 @@ public class RoomDao implements IRoomDao{
         return rooms;
     }
 
-//    public List<Room> getByOrder(Order order) throws DaoException{
-//        List<Room> rooms = new ArrayList<>();
-//        Connection connection = ConnectionUtil.getConnection();
-//        try (PreparedStatement stm = connection.prepareStatement(GET_BY_ORDER_QUERY)) {
-//            stm.setString(1, order.getHotel().getCountry());
-//            stm.setString(2, order.getHotel().getCity());
-//            stm.setString(3, order.getHotel().getName());
-//            stm.setLong(4, order.getRoomType().getId());
-//            stm.setLong(5, order.getCheckInDate());
-//            stm.setLong(6, order.getCheckOutDate());
-//            ResultSet resultSet = stm.executeQuery();
-//            while (resultSet.next()) {
-//                rooms.add(Entio.parseRoom(resultSet));
-//            }
-//        } catch (SQLException e) {
-//            BookingSystemLogger.getInstance().logError(getClass(), Messages.GET_ROOM_EXCEPTION);
-//            throw new DaoException(Messages.GET_ROOM_EXCEPTION, e);
-//        }
-//        return rooms;
-//    }
-
-    public List<Room> getByListId(List<Long> idList) throws DaoException{
+    public List<Room> getByIdList(List<Long> idList) throws DaoException{
         List<Room> roomList = new ArrayList<>();
         Connection connection = ConnectionUtil.getConnection();
         final String GET_BY_LIST_ID_FINISHED_QUERY = getFinishedQuery(GET_BY_LIST_ID_QUERY, idList);

@@ -11,6 +11,7 @@ public class Messages {
     public static final String CHECK_IS_NEW_USER_EXCEPTION = "Unable to check the client ";
     public static final String TRANSACTION_SUCCEEDED = "Transaction succeeded";
     public static final String TRANSACTION_FAILED = "Transaction failed";
+    public static final String ROLLBACK_FAILED = "Rollback failed";
 
     public static final String ADD_ORDER_EXCEPTION = "Unable to add the order ";
     public static final String GET_ORDER_EXCEPTION = "Unable to get the order ";
