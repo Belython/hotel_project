@@ -17,6 +17,9 @@ public class HotelDao implements IHotelDao {
     private final String GET_BY_ID_QUERY = "SELECT H.*, L.* " +
             "FROM HOTELS H " +
             "JOIN LOCATIONS L ON H.LOCATION_ID = L.LOCATION_ID WHERE H.HOTEL_ID = ?";
+    private final String GET_BY_HOTEL_NAME_QUERY = "SELECT H.*, L.* " +
+            "FROM HOTELS H " +
+            "JOIN LOCATIONS L ON H.LOCATION_ID = L.LOCATION_ID WHERE H.HOTEL_NAME = ?";
 //    private final String GET_ALL_QUERY = "SELECTROOM * FROM CITIES WHERE";
 //    private final String UPDATE_QUERY = "UPDATE CITIES SET COUNTRY = ?, CITY = ? WHERE ID = ?";
 //    private final String DELETE_QUERY = "UPDATE CITIES SET STATUS = 'deleted' WHERE ID = ?";
@@ -65,7 +68,7 @@ public class HotelDao implements IHotelDao {
             stm.setLong(1, id);
             resultSet = stm.executeQuery();
             resultSet.next();
-            hotel = EntityBuilder.parseHotel(resultSet);
+            hotel = EntityParser.parseHotel(resultSet);
         } catch (SQLException e) {
             BookingSystemLogger.getInstance().logError(getClass(), Messages.GET_HOTEL_EXCEPTION);
             throw new DaoException(Messages.GET_HOTEL_EXCEPTION, e);
@@ -90,8 +93,21 @@ public class HotelDao implements IHotelDao {
         return list;
     }
 
-    public Hotel getByHotelName(String country, String city) {
-        Hotel hotel = new Hotel();
+    public Hotel getByHotelName(String hotelName) throws DaoException{
+        Hotel hotel = null;
+        Connection connection = ConnectionUtil.getConnection();
+        ResultSet resultSet = null;
+        try (PreparedStatement stm = connection.prepareStatement(GET_BY_HOTEL_NAME_QUERY)) {
+            stm.setString(1, hotelName);
+            resultSet = stm.executeQuery();
+            resultSet.next();
+            hotel = EntityParser.parseHotel(resultSet);
+        } catch (SQLException e) {
+            BookingSystemLogger.getInstance().logError(getClass(), Messages.GET_HOTEL_EXCEPTION);
+            throw new DaoException(Messages.GET_HOTEL_EXCEPTION, e);
+        } finally {
+            ClosingUtil.close(resultSet);
+        }
         return hotel;
     }
 }

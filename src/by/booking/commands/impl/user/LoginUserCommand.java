@@ -7,25 +7,26 @@ import by.booking.constants.PagePath;
 import by.booking.constants.Parameters;
 import by.booking.entities.User;
 import by.booking.exceptions.ServiceException;
+import by.booking.requestHandler.ServletAction;
 import by.booking.services.impl.UserServiceImpl;
 import by.booking.utils.RequestParameterParser;
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
-import java.sql.SQLException;
-import java.util.Locale;
 
 public class LoginUserCommand implements ICommand {
 
     @Override
-    public String execute(HttpServletRequest request) {
+    public ServletAction execute(HttpServletRequest request, HttpServletResponse response) {
+        ServletAction servletAction = ServletAction.FORWARD_PAGE;
         String page = null;
         HttpSession session = request.getSession();
         try {
-            User user = RequestParameterParser.getUser(request);
-            if(UserServiceImpl.getInstance().checkUserAuthorization(user.getLogin(), user.getPassword())){
+            User user = RequestParameterParser.parseUser(request);
+            if (UserServiceImpl.getInstance().checkUserAuthorization(user.getLogin(), user.getPassword())){
                 user = UserServiceImpl.getInstance().getUserByLogin(user.getLogin());
                 session.setAttribute(Parameters.USER, user);
-                page = RequestParameterParser.getPagePath(request);
+                page = RequestParameterParser.parsePagePath(request);
                 if (page == null) {
                     page = PagePath.INDEX_PAGE_PATH;
                 }
@@ -36,12 +37,13 @@ public class LoginUserCommand implements ICommand {
             }
             session.setAttribute(Parameters.CURRENT_PAGE_PATH, page);
         }
-        catch (ServiceException | SQLException e) {
+        catch (ServiceException e) {
             page = PagePath.ERROR_PAGE_PATH;
             request.setAttribute(Parameters.ERROR_DATABASE, MessageManager.getInstance().getProperty(MessageConstants.ERROR_DATABASE));
         }
         session.setAttribute(Parameters.CURRENT_PAGE_PATH, page);
-        return page;
+        servletAction.setPage(page);
+        return servletAction;
     }
 
 }

@@ -7,23 +7,25 @@ import by.booking.constants.MessageConstants;
 import by.booking.constants.PagePath;
 import by.booking.constants.Parameters;
 import by.booking.exceptions.ServiceException;
+import by.booking.requestHandler.ServletAction;
 import by.booking.services.impl.UserServiceImpl;
 import by.booking.utils.RequestParameterParser;
 
 
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
-import java.sql.SQLException;
 
 public class RegistrationCommand implements ICommand {
     private User user;
 
     @Override
-    public String execute(HttpServletRequest request) {
+    public ServletAction execute(HttpServletRequest request, HttpServletResponse response) {
+        ServletAction servletAction = ServletAction.FORWARD_PAGE;
         String page = null;
         HttpSession session = request.getSession();
         try{
-            user = RequestParameterParser.getUser(request);
+            user = RequestParameterParser.parseUser(request);
 //            accountIdString = request.getParameter(Parameters.ACCOUNT_ID);
             if(areFieldsFullStocked()){
 //                account = RequestParameterParser.getAccount(request);
@@ -42,7 +44,7 @@ public class RegistrationCommand implements ICommand {
                 page = PagePath.REGISTRATION_PAGE_PATH;
             }
         }
-        catch (ServiceException | SQLException e) {
+        catch (ServiceException e) {
             page = PagePath.ERROR_PAGE_PATH;
             request.setAttribute(Parameters.ERROR_DATABASE, MessageManager.getInstance().getProperty(MessageConstants.ERROR_DATABASE));
         }
@@ -56,7 +58,8 @@ public class RegistrationCommand implements ICommand {
             e.printStackTrace();
         }
         session.setAttribute(Parameters.CURRENT_PAGE_PATH, page);
-        return page;
+        servletAction.setPage(page);
+        return servletAction;
     }
 
     // TODO javascript???

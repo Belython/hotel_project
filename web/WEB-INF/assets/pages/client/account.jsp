@@ -15,22 +15,16 @@
     <input type="hidden" name="command" value="payBill" />
     Счета<br/>
     <c:forEach var="bill" items="${billList}">
-        Тип номера ${bill.room.roomType.roomTypeName}
-        Номер номера ${bill.room.roomNumber}
-        Статус ${bill.status}
+        <c:forEach var="room" items="${bill.roomList}">
+            Тип номера ${room.roomType.name}
+            Номер номера ${room.roomNumber}
+            Статус ${bill.status}
+        </c:forEach>
         <c:if test="${bill.status == 'notPaid'}">
             <input type="hidden" name="billToPay" value="${bill.id}"/>
             <input type="submit" value="Оплатить"/>
         </c:if><br/>
     </c:forEach>
-    Заявки<br/>
-    <c:forEach var="order" items="${orderList}">
-        Тип номера ${order.roomType}
-        Отель ${order.hotel.name}
-        <br/>
-    </c:forEach>
-    ${operationMessage}
-    ${errorUserExists} <br/>
     <a href="controller?command=back">Вернуться обратно</a>
 </form>
 </body>

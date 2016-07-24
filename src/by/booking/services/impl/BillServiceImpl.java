@@ -11,6 +11,7 @@ import by.booking.services.interfaces.IBillService;
 import by.booking.utils.BookingSystemLogger;
 import by.booking.utils.ConnectionUtil;
 import by.booking.utils.EntityBuilder;
+import by.booking.utils.ExceptionHandler;
 
 import java.sql.Connection;
 import java.sql.SQLException;
@@ -41,26 +42,17 @@ public class BillServiceImpl implements IBillService {
             connection.commit();
             BookingSystemLogger.getInstance().logError(getClass(), Messages.TRANSACTION_SUCCEEDED);
         } catch (SQLException | DaoException e) {
-            try {
-                connection.rollback();
-                BookingSystemLogger.getInstance().logError(getClass(), Messages.TRANSACTION_FAILED);
-                throw new ServiceException(e.getMessage());
-            } catch (SQLException e1) {
-                e1.printStackTrace();
-                BookingSystemLogger.getInstance().logError(getClass(), Messages.ROLLBACK_FAILED);
-                throw new ServiceException(e1.getMessage());
-            }
-
+            ExceptionHandler.getServiceHandler(connection, e, getClass());
         }
     }
 
     @Override
-    public List<Bill> getAll() throws SQLException, ServiceException {
+    public List<Bill> getAll() throws ServiceException {
         return null;
     }
 
     @Override
-    public Bill getById(long billId) throws SQLException, ServiceException {
+    public Bill getById(long billId) throws ServiceException {
         Connection connection = ConnectionUtil.getConnection();
         Bill bill = null;
         try {
@@ -71,20 +63,13 @@ public class BillServiceImpl implements IBillService {
             connection.commit();
             BookingSystemLogger.getInstance().logError(getClass(), Messages.TRANSACTION_SUCCEEDED);
         } catch (SQLException | DaoException e) {
-            try {
-                connection.rollback();
-                BookingSystemLogger.getInstance().logError(getClass(), Messages.TRANSACTION_FAILED);
-                throw new ServiceException(e.getMessage());
-            } catch (SQLException e1) {
-                BookingSystemLogger.getInstance().logError(getClass(), Messages.ROLLBACK_FAILED);
-                throw new ServiceException(e1.getMessage());
-            }
+            ExceptionHandler.getServiceHandler(connection, e, getClass());
         }
         return bill;
     }
 
     @Override
-    public void update(Bill bill) throws SQLException, ServiceException {
+    public void update(Bill bill) throws ServiceException {
         Connection connection = ConnectionUtil.getConnection();
         try {
             connection.setAutoCommit(false);
@@ -92,24 +77,16 @@ public class BillServiceImpl implements IBillService {
             connection.commit();
             BookingSystemLogger.getInstance().logError(getClass(), Messages.TRANSACTION_SUCCEEDED);
         } catch (SQLException | DaoException e) {
-            try {
-                connection.rollback();
-                BookingSystemLogger.getInstance().logError(getClass(), Messages.TRANSACTION_FAILED);
-                throw new ServiceException(e.getMessage());
-            } catch (SQLException e1) {
-                BookingSystemLogger.getInstance().logError(getClass(), Messages.ROLLBACK_FAILED);
-                throw new ServiceException(e1.getMessage());
-            }
-
+            ExceptionHandler.getServiceHandler(connection, e, getClass());
         }
     }
 
     @Override
-    public void delete(long billId) throws SQLException, ServiceException {
+    public void delete(long billId) throws ServiceException {
 
     }
 
-    public List<Bill> getByUserId(long userId) throws SQLException, ServiceException {
+    public List<Bill> getByUserId(long userId) throws ServiceException {
         Connection connection = ConnectionUtil.getConnection();
         List<Bill> bills = null;
         List<Bill> newBills = new ArrayList<>();
@@ -124,14 +101,7 @@ public class BillServiceImpl implements IBillService {
             connection.commit();
             BookingSystemLogger.getInstance().logError(getClass(), Messages.TRANSACTION_SUCCEEDED);
         } catch (SQLException | DaoException e) {
-            try {
-                connection.rollback();
-                BookingSystemLogger.getInstance().logError(getClass(), Messages.TRANSACTION_FAILED);
-                throw new ServiceException(e.getMessage());
-            } catch (SQLException e1) {
-                BookingSystemLogger.getInstance().logError(getClass(), Messages.ROLLBACK_FAILED);
-                throw new ServiceException(e1.getMessage());
-            }
+            ExceptionHandler.getServiceHandler(connection, e, getClass());
         }
         return newBills;
     }

@@ -7,8 +7,8 @@
 		<title>Разблокировка счета</title>
 	</head>
 	<body>
-		<form name="unblockForm" method="POST" action="controller">
-			<input type="hidden" name="command" value="unblock" />
+		<form name="unblockForm" method="POST" servletAction="controller">
+			<input type="hidden" name="commandName" value="unblock" />
 			Выберите счет для разблокировки
 			<table border="1">
 				<tr bgcolor="#CCCCCC">
@@ -29,8 +29,8 @@
 			${errorEmptyList} <br/>
 			<input type="submit" value="Разблокировать"/>  <br/>
 		</form>
-		<a href="controller?command=backadmin">Вернуться обратно</a>
-		<a href="controller?command=logout">Выйти из системы</a>
+		<a href="controller?commandName=backadmin">Вернуться обратно</a>
+		<a href="controller?commandName=logout">Выйти из системы</a>
 	</body>
 </html>
 

@@ -36,6 +36,7 @@ public class Parameters {
     public static final String LOCATION_CITY = "city";
     public static final String LOCATION_STATUS = "locationStatus";
 
+    public static final String HOTEL = "hotel";
     public static final String HOTEL_ID = "hotelId";
     public static final String HOTEL_NAME = "hotelName";
     public static final String HOTEL_STATUS = "hotelStatus";
@@ -68,6 +69,7 @@ public class Parameters {
     public static final String CURRENT_PAGE_PATH = "currentPagePath";
     public static final String LOCALE = "locale";
     public static final String LOCALE_LANGUAGE = "language";
+    public static final String ANY_HOTEL = "any";
 
     private Parameters(){
     }

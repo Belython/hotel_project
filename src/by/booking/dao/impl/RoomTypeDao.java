@@ -2,7 +2,6 @@ package by.booking.dao.impl;
 
 import by.booking.constants.Messages;
 import by.booking.dao.interfaces.IRoomTypeDao;
-import by.booking.entities.Room;
 import by.booking.entities.RoomType;
 import by.booking.exceptions.DaoException;
 import by.booking.utils.*;
@@ -41,7 +40,7 @@ public class RoomTypeDao implements IRoomTypeDao {
         ResultSet resultSet = null;
         try (PreparedStatement stm = connection.prepareStatement(ADD_QUERY,
                 Statement.RETURN_GENERATED_KEYS)) {
-            stm.setString(1, roomType.getRoomTypeName());
+            stm.setString(1, roomType.getName());
             stm.setInt(2, roomType.getMaxPersons());
             stm.setInt(3, roomType.getRoomPricePerNight());
             stm.setBlob(4, SerializationUtil.serialize(roomType.getFacilities()));
@@ -94,7 +93,7 @@ public class RoomTypeDao implements IRoomTypeDao {
     public void update(RoomType roomType) throws DaoException{
         Connection connection = ConnectionUtil.getConnection();
         try (PreparedStatement stm = connection.prepareStatement(UPDATE_QUERY)) {
-            stm.setString(1, roomType.getRoomTypeName());
+            stm.setString(1, roomType.getName());
             stm.setInt(2, roomType.getMaxPersons());
             stm.setInt(3, roomType.getRoomPricePerNight());
             stm.setBlob(4, SerializationUtil.serialize(roomType.getFacilities()));

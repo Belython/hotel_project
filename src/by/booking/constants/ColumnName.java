@@ -16,7 +16,7 @@ public class ColumnName {
     public static final String BILL_TOTAL_PERSONS = "TOTAL_PERSONS";
     public static final String BILL_CHECK_IN_DATE = "CHECK_IN_DATE";
     public static final String BILL_CHECK_OUT_DATE = "CHECK_OUT_DATE";
-    public static final String BILL_ROOM_ID_LIST = "ROOMS_IDS";
+    public static final String BILL_ROOM_ID_LIST = "ROOM_ID_LIST";
     public static final String BILL_PAYMENT_AMOUNT = "PAYMENT_AMOUNT";
     public static final String BILL_STATUS = "BILL_STATUS";
 

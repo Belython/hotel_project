@@ -1,0 +1,22 @@
+package by.booking.utils;
+
+import by.booking.constants.Messages;
+import by.booking.exceptions.ServiceException;
+
+import java.sql.Connection;
+import java.sql.SQLException;
+
+public class ExceptionHandler {
+
+    public static void getServiceHandler(Connection connection, Exception exception, Class serviceClass) throws ServiceException {
+        try {
+            connection.rollback();
+            BookingSystemLogger.getInstance().logError(serviceClass, Messages.TRANSACTION_FAILED);
+            throw new ServiceException(exception.getMessage());
+        } catch (SQLException e) {
+            BookingSystemLogger.getInstance().logError(serviceClass, Messages.ROLLBACK_FAILED);
+            throw new ServiceException(e.getMessage());
+        }
+    }
+
+}

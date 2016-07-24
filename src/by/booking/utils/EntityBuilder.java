@@ -5,7 +5,6 @@ import by.booking.constants.Statuses;
 import by.booking.entities.RoomType;
 import by.booking.entities.*;
 
-import java.util.ArrayList;
 import java.util.List;
 
 public class EntityBuilder {
@@ -39,7 +38,7 @@ public class EntityBuilder {
                                          List<String> facilities, String roomTypeStatus) {
         RoomType roomType = new RoomType();
         roomType.setId(roomTypeId);
-        roomType.setRoomTypeName(roomTypeName);
+        roomType.setName(roomTypeName);
         roomType.setMaxPersons(maxPersons);
         roomType.setRoomPricePerNight(roomPricePerNight);
         roomType.setFacilities(facilities);
@@ -102,13 +101,18 @@ public class EntityBuilder {
         return bill;
     }
 
-//    public static Bill buildNewBill(int paymentAmount, Order order, Room room) {
-//        Bill bill = new Bill();
-//        bill.setPaymentAmount(paymentAmount);
-//        bill.setOrder(order);
-//        bill.setRoom(room);
-//        bill.setStatus(Statuses.BILL_NOT_PAID);
-//        return bill;
-//    }
+    public static Bill buildNewBill(User user, int totalPersons, long checkInDate, long checkOutDate,
+                                 List<Room> roomList, int paymentAmount) {
+        Bill bill = new Bill();
+        bill.setUser(user);
+        bill.setTotalPersons(totalPersons);
+        bill.setCheckInDate(checkInDate);
+        bill.setCheckOutDate(checkOutDate);
+        bill.setRoomList(roomList);
+        bill.setPaymentAmount(paymentAmount);
+        bill.setStatus(Statuses.BILL_NOT_PAID);
+        return bill;
+    }
+
 
 }

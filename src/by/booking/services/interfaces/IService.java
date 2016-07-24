@@ -6,13 +6,13 @@ import java.util.List;
 
 public interface IService<T> {
 
-    void add(T entity) throws SQLException, ServiceException;
+    void add(T entity) throws ServiceException;
 
-    List<T> getAll() throws SQLException, ServiceException;
+    List<T> getAll() throws ServiceException;
 
-    T getById(long id) throws SQLException, ServiceException;
+    T getById(long id) throws ServiceException;
 
-    void update(T entity) throws SQLException, ServiceException;
+    void update(T entity) throws ServiceException;
 
-    void delete(long id) throws SQLException, ServiceException;
+    void delete(long id) throws ServiceException;
 }

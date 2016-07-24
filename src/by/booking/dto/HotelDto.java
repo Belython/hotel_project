@@ -16,21 +16,20 @@ public class HotelDto {
     private String hotelCountry;
     private String hotelCity;
     private String hotelName;
-    private List<Room> rooms = new ArrayList<>();
-    private List<RoomType> roomTypes = new ArrayList<>();
+    private List<Room> roomList = new ArrayList<>();
+    private List<RoomType> roomTypeList = new ArrayList<>();
     private HashMap<RoomType, Integer> roomTypesCount = new HashMap<>();
     private int roomsCount;
 
-    public HotelDto(long hotelId, String hotelCountry, String hotelCity, String hotelName, List<Room> rooms) {
+    public HotelDto(long hotelId, String hotelCountry, String hotelCity, String hotelName, List<Room> roomList) {
         this.hotelId = hotelId;
         this.hotelCountry = hotelCountry;
         this.hotelCity = hotelCity;
         this.hotelName = hotelName;
-        this.rooms = rooms;
-        this.roomsCount = rooms.size();
+        this.roomList = roomList;
+        this.roomsCount = roomList.size();
         setRoomTypes();
     }
-
 
     public long getHotelId() {
         return hotelId;
@@ -64,34 +63,34 @@ public class HotelDto {
         this.hotelName = hotelName;
     }
 
-    public List<Room> getRooms() {
-        return rooms;
+    public List<Room> getRoomList() {
+        return roomList;
     }
 
-    public void setRooms(List<Room> rooms) {
-        this.rooms = rooms;
-        this.roomsCount = rooms.size();
+    public void setRoomList(List<Room> roomList) {
+        this.roomList = roomList;
+        this.roomsCount = roomList.size();
     }
 
-    public List<RoomType> getRoomTypes() {
-        return roomTypes;
+    public List<RoomType> getRoomTypeList() {
+        return roomTypeList;
     }
 
     private void setRoomTypes() {
         int counter = 0;
-        for (int i = 0; i < rooms.size(); i++) {
+        for (int i = 0; i < roomList.size(); i++) {
             counter++;
-            RoomType currentRoomType = rooms.get(i).getRoomType();
-            if (i < (rooms.size() - 1)) {
-                String currentRoomTypeName = currentRoomType.getRoomTypeName();
-                String nextRoomTypeName = rooms.get(i + 1).getRoomType().getRoomTypeName();
+            RoomType currentRoomType = roomList.get(i).getRoomType();
+            if (i < (roomList.size() - 1)) {
+                String currentRoomTypeName = currentRoomType.getName();
+                String nextRoomTypeName = roomList.get(i + 1).getRoomType().getName();
                 if (!nextRoomTypeName.equals(currentRoomTypeName)) {
-                    roomTypes.add(rooms.get(i).getRoomType());
+                    roomTypeList.add(roomList.get(i).getRoomType());
                     roomTypesCount.put(currentRoomType, counter);
                     counter = 0;
                 }
             } else {
-                roomTypes.add(rooms.get(i).getRoomType());
+                roomTypeList.add(roomList.get(i).getRoomType());
                 roomTypesCount.put(currentRoomType, counter);
             }
         }
@@ -114,7 +113,7 @@ public class HotelDto {
     }
 
     public RoomType getRoomTypeById(long roomTypeId) {
-        for (RoomType roomType: roomTypes) {
+        for (RoomType roomType: roomTypeList) {
             if(roomType.getId() == roomTypeId) {
                 return roomType;
             }

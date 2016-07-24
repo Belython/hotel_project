@@ -21,7 +21,7 @@ public class SecurityFilter implements Filter {
 //        UserType type = RequestParameterParser.getUserType(httpRequest);
         String type = null;
         try {
-            CommandType commandType = RequestParameterParser.getCommandType(httpRequest);
+            CommandType commandType = RequestParameterParser.parseCommandType(httpRequest);
             if (type == null) {
                 if (commandType == CommandType.LOGIN) {
                     chain.doFilter(request, response);

@@ -21,7 +21,7 @@ public class CommandFactory {
     public ICommand defineCommand(HttpServletRequest request){
         ICommand current = null;
         try{
-            CommandType type = RequestParameterParser.getCommandType(request);
+            CommandType type = RequestParameterParser.parseCommandType(request);
             current = type.getCurrentCommand();
         }
         catch(IllegalArgumentException e){

@@ -4,11 +4,13 @@
 <%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
 <link rel="stylesheet" href="${pageContext.request.contextPath}/assets/css/index.css"/>
+
 <html>
 	<head>
 		<title>Авторизация</title>
+		<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
 	</head>
-	<body>
+	<body onload="setLocale()">
 		<%--Форма регистрации--%>
 		<c:choose>
 			<c:when test="${empty user}">
@@ -99,10 +101,9 @@
 
 		<form name="langForm" method="POST" action="controller">
 			<input type="hidden" name="command" value="setLocale"/>
-
 			<label for="language">Локаль</label>
 			<select id="language" name="language">
-				<option value="ru" selected="selected">RU</option>
+				<option value="ru">RU</option>
 				<option value="en">EN</option>
 			</select>
 			<input type="submit" value="Ввод">
@@ -110,5 +111,18 @@
 
 		${operationMessage}
 
+
+		<div id="test">
+			<label for="num1">Число1</label>
+			<input type="text" id="num1" value="">
+			<label for="num2">Число2</label>
+			<input type="text" id="num2" value="">
+			<p id="rez">rez</p>
+			<p id="tsst">test</p>
+		</div>
+	<button type="button" onclick="calcul()">Push me</button>
+	<c:set scope="request" value="${exprr}" var="prop"/>
+	<c:out value="${requestScope.prop}"/>
 	</body>
+	<script type="text/javascript" src="assets/scripts/script.js"></script>
 </html>

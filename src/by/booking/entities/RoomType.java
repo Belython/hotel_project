@@ -4,12 +4,12 @@ import java.util.List;
 
 public class RoomType {
 
-    long id;
-    String roomTypeName;
-    int maxPersons;
-    int roomPricePerNight;
-    List<String> facilities;
-    String status;
+    private long id;
+    private String name;
+    private int maxPersons;
+    private int roomPricePerNight;
+    private List<String> facilities;
+    private String status;
 
     public long getId() {
         return id;
@@ -19,12 +19,12 @@ public class RoomType {
         this.id = id;
     }
 
-    public String getRoomTypeName() {
-        return roomTypeName;
+    public String getName() {
+        return name;
     }
 
-    public void setRoomTypeName(String roomTypeName) {
-        this.roomTypeName = roomTypeName;
+    public void setName(String name) {
+        this.name = name;
     }
 
     public int getMaxPersons() {
@@ -57,5 +57,32 @@ public class RoomType {
 
     public void setStatus(String status) {
         this.status = status;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+
+        RoomType roomType = (RoomType) o;
+
+        if (id != roomType.id) return false;
+        if (maxPersons != roomType.maxPersons) return false;
+        if (roomPricePerNight != roomType.roomPricePerNight) return false;
+        if (!name.equals(roomType.name)) return false;
+        if (!facilities.equals(roomType.facilities)) return false;
+        return status.equals(roomType.status);
+
+    }
+
+    @Override
+    public int hashCode() {
+        int result = (int) (id ^ (id >>> 32));
+        result = 31 * result + name.hashCode();
+        result = 31 * result + maxPersons;
+        result = 31 * result + roomPricePerNight;
+        result = 31 * result + facilities.hashCode();
+        result = 31 * result + status.hashCode();
+        return result;
     }
 }

@@ -103,6 +103,7 @@ public class BillDao implements IBillDao{
         }
         return bills;
     }
+
     @Override
     public void update(Bill bill) throws DaoException{
         Connection connection = ConnectionUtil.getConnection();
@@ -114,6 +115,7 @@ public class BillDao implements IBillDao{
             stm.setBlob(5, SerializationUtil.serialize(bill.getRoomIdList()));
             stm.setInt(6, bill.getPaymentAmount());
             stm.setString(7, bill.getStatus());
+            stm.setLong(8, bill.getId());
             stm.executeUpdate();
         } catch (SQLException e) {
             BookingSystemLogger.getInstance().logError(getClass(), Messages.GET_BILL_EXCEPTION);

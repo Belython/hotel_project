@@ -5,14 +5,8 @@ import by.booking.commands.impl.user.*;
 
 public enum CommandType {
     //user commands
-    LOGIN, LOGOUT, REGISTRATION, GOTOREGISTRATION, BACK, SELECTHOTEL, SELECTROOM, MAKEORDER, GOTOACCOUNT, PAYBILL,
-    SETLOCALE,
-
-    // client commands
-    PAYMENT, GOTOPAYMENT, BALANCE, ADDFUNDS, GOTOADDFUNDS, BLOCK, BACKCLIENT,
-
-    // admin commands
-    CLIENTS, OPERATIONS, UNBLOCK, GOTOUNBLOCK, BACKADMIN;
+    LOGIN, LOGOUT, REGISTRATION, GOTOREGISTRATION, BACK, SELECTHOTEL, SELECTROOM, MAKEBILL, GOTOACCOUNT, PAYBILL,
+    SETLOCALE, CALCUL, CANCELACTION;
 
     public ICommand getCurrentCommand() throws EnumConstantNotPresentException{
         switch(this){
@@ -40,8 +34,8 @@ public enum CommandType {
             case SELECTROOM:
                 return new SelectRoomCommand();
 
-            case MAKEORDER:
-                return new MakeOrderCommand();
+            case MAKEBILL:
+                return new MakeBillCommand();
 
             case GOTOACCOUNT:
                 return new GoToAccountCommand();
@@ -49,6 +43,11 @@ public enum CommandType {
             case PAYBILL:
                 return new PayBillCommand();
 
+            case CALCUL:
+                return new CalculCommand();
+
+            case CANCELACTION:
+                return new CancelActionCommand();
             default:
                 return new LoginUserCommand();
                 //throw new EnumConstantNotPresentException(this.getDeclaringClass(), this.name());

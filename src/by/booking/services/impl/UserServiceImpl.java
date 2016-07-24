@@ -8,6 +8,7 @@ import by.booking.exceptions.ServiceException;
 import by.booking.services.interfaces.IUserService;
 import by.booking.utils.BookingSystemLogger;
 import by.booking.utils.ConnectionUtil;
+import by.booking.utils.ExceptionHandler;
 
 import java.sql.Connection;
 import java.sql.SQLException;
@@ -27,7 +28,7 @@ public class UserServiceImpl implements IUserService {
     }
 
     @Override
-    public void add(User user) throws SQLException, ServiceException {
+    public void add(User user) throws ServiceException {
         Connection connection = ConnectionUtil.getConnection();
         try {
             connection.setAutoCommit(false);
@@ -36,14 +37,12 @@ public class UserServiceImpl implements IUserService {
             BookingSystemLogger.getInstance().logError(getClass(), Messages.TRANSACTION_SUCCEEDED);
         }
         catch (SQLException | DaoException e) {
-            connection.rollback();
-            BookingSystemLogger.getInstance().logError(getClass(), Messages.TRANSACTION_FAILED);
-            throw new ServiceException(e.getMessage());
+            ExceptionHandler.getServiceHandler(connection, e, getClass());
         }
     }
     
     @Override
-    public List<User> getAll() throws SQLException, ServiceException {
+    public List<User> getAll() throws ServiceException {
         Connection connection = ConnectionUtil.getConnection();
         List<User> users = null;
         try {
@@ -56,30 +55,27 @@ public class UserServiceImpl implements IUserService {
             BookingSystemLogger.getInstance().logError(getClass(), Messages.TRANSACTION_SUCCEEDED);
         }
         catch (SQLException | DaoException e) {
-            connection.rollback();
-            BookingSystemLogger.getInstance().logError(getClass(), Messages.TRANSACTION_FAILED);
-            throw new ServiceException(e.getMessage());
+            ExceptionHandler.getServiceHandler(connection, e, getClass());
         }
         return users;
     }
 
     @Override
-    public User getById(long id) throws SQLException {
-        throw new UnsupportedOperationException();
-    }
-
-
-    @Override
-    public void update(User entity) throws SQLException {
-        throw new UnsupportedOperationException();
+    public User getById(long id) throws ServiceException {
+        return null;
     }
 
     @Override
-    public void delete(long id) throws SQLException {
-        throw new UnsupportedOperationException();
+    public void update(User entity) throws ServiceException {
+
     }
 
-    public boolean checkUserAuthorization(String login, String password) throws SQLException, ServiceException {
+    @Override
+    public void delete(long id) throws ServiceException {
+
+    }
+
+    public boolean checkUserAuthorization(String login, String password) throws ServiceException {
         Connection connection = ConnectionUtil.getConnection();
         boolean isAuthorized = false;
         try {
@@ -89,14 +85,12 @@ public class UserServiceImpl implements IUserService {
             BookingSystemLogger.getInstance().logError(getClass(), Messages.TRANSACTION_SUCCEEDED);
         }
         catch (SQLException | DaoException e) {
-            connection.rollback();
-            BookingSystemLogger.getInstance().logError(getClass(), Messages.TRANSACTION_FAILED);
-            throw new ServiceException(e.getMessage());
+            ExceptionHandler.getServiceHandler(connection, e, getClass());
         }
         return isAuthorized;
     }
 
-    public User getUserByLogin(String login) throws SQLException, ServiceException {
+    public User getUserByLogin(String login) throws ServiceException {
         Connection connection = ConnectionUtil.getConnection();
         User user = null;
         try {
@@ -106,14 +100,12 @@ public class UserServiceImpl implements IUserService {
             BookingSystemLogger.getInstance().logError(getClass(), Messages.TRANSACTION_SUCCEEDED);
         }
         catch (SQLException | DaoException e) {
-            connection.rollback();
-            BookingSystemLogger.getInstance().logError(getClass(), Messages.TRANSACTION_FAILED);
-            throw new ServiceException(e.getMessage());
+            ExceptionHandler.getServiceHandler(connection, e, getClass());
         }
         return user;
     }
 
-    public boolean checkIsNewUser(User user) throws SQLException, ServiceException {
+    public boolean checkIsNewUser(User user) throws ServiceException {
         Connection connection = ConnectionUtil.getConnection();
         boolean isNew = false;
         try {
@@ -125,14 +117,12 @@ public class UserServiceImpl implements IUserService {
             BookingSystemLogger.getInstance().logError(getClass(), Messages.TRANSACTION_SUCCEEDED);
         }
         catch (SQLException | DaoException e) {
-            connection.rollback();
-            BookingSystemLogger.getInstance().logError(getClass(), Messages.TRANSACTION_FAILED);
-            throw new ServiceException(e.getMessage());
+            ExceptionHandler.getServiceHandler(connection, e, getClass());
         }
         return isNew;
     }
 
-    public void registrateUser(User user) throws SQLException, ServiceException {
+    public void registrateUser(User user) throws ServiceException {
         Connection connection = ConnectionUtil.getConnection();
         try {
             connection.setAutoCommit(false);
@@ -143,9 +133,7 @@ public class UserServiceImpl implements IUserService {
             BookingSystemLogger.getInstance().logError(getClass(), Messages.TRANSACTION_SUCCEEDED);
         }
         catch (SQLException | DaoException e) {
-            connection.rollback();
-            BookingSystemLogger.getInstance().logError(getClass(), Messages.TRANSACTION_FAILED);
-            throw new ServiceException(e.getMessage());
+            ExceptionHandler.getServiceHandler(connection, e, getClass());
         }
     }
 }

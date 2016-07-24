@@ -1,15 +1,14 @@
 package by.booking.services.impl;
 
 import by.booking.constants.Messages;
-import by.booking.dao.impl.RoomDao;
 import by.booking.dao.impl.RoomTypeDao;
-import by.booking.entities.Room;
 import by.booking.entities.RoomType;
 import by.booking.exceptions.DaoException;
 import by.booking.exceptions.ServiceException;
 import by.booking.services.interfaces.IRoomTypeService;
 import by.booking.utils.BookingSystemLogger;
 import by.booking.utils.ConnectionUtil;
+import by.booking.utils.ExceptionHandler;
 
 import java.sql.Connection;
 import java.sql.SQLException;
@@ -28,12 +27,12 @@ public class RoomTypeServiceImpl implements IRoomTypeService {
         return instance;
     }
     @Override
-    public void add(RoomType entity) throws SQLException, ServiceException {
+    public void add(RoomType entity) throws ServiceException {
 
     }
 
     @Override
-    public List<RoomType> getAll() throws SQLException, ServiceException {
+    public List<RoomType> getAll() throws ServiceException {
         Connection connection = ConnectionUtil.getConnection();
         List<RoomType> roomTypes = null;
         try {
@@ -43,20 +42,18 @@ public class RoomTypeServiceImpl implements IRoomTypeService {
             BookingSystemLogger.getInstance().logError(getClass(), Messages.TRANSACTION_SUCCEEDED);
         }
         catch (SQLException | DaoException e) {
-            connection.rollback();
-            BookingSystemLogger.getInstance().logError(getClass(), Messages.TRANSACTION_FAILED);
-            throw new ServiceException(e.getMessage());
+            ExceptionHandler.getServiceHandler(connection, e, getClass());
         }
         return roomTypes;
     }
 
     @Override
-    public RoomType getById(long id) throws SQLException, ServiceException {
+    public RoomType getById(long id) throws ServiceException {
         return null;
     }
 
     @Override
-    public void update(RoomType roomType) throws SQLException, ServiceException {
+    public void update(RoomType roomType) throws ServiceException {
         Connection connection = ConnectionUtil.getConnection();
         try {
             connection.setAutoCommit(false);
@@ -65,14 +62,12 @@ public class RoomTypeServiceImpl implements IRoomTypeService {
             BookingSystemLogger.getInstance().logError(getClass(), Messages.TRANSACTION_SUCCEEDED);
         }
         catch (SQLException | DaoException e) {
-            connection.rollback();
-            BookingSystemLogger.getInstance().logError(getClass(), Messages.TRANSACTION_FAILED);
-            throw new ServiceException(e.getMessage());
+            ExceptionHandler.getServiceHandler(connection, e, getClass());
         }
     }
 
     @Override
-    public void delete(long id) throws SQLException, ServiceException {
+    public void delete(long id) throws ServiceException {
 
     }
 }

@@ -2,7 +2,6 @@ package by.booking.services.impl;
 
 
 import by.booking.constants.Messages;
-import by.booking.dao.impl.BillDao;
 import by.booking.dao.impl.RoomDao;
 import by.booking.dto.OrderDto;
 import by.booking.entities.Bill;
@@ -12,7 +11,7 @@ import by.booking.exceptions.ServiceException;
 import by.booking.services.interfaces.IRoomService;
 import by.booking.utils.BookingSystemLogger;
 import by.booking.utils.ConnectionUtil;
-import by.booking.utils.EntityBuilder;
+import by.booking.utils.ExceptionHandler;
 
 import java.sql.Connection;
 import java.sql.SQLException;
@@ -32,12 +31,12 @@ public class RoomServiceImpl implements IRoomService{
     }
 
     @Override
-    public void add(Room entity) throws SQLException {
+    public void add(Room entity) throws ServiceException {
         throw new UnsupportedOperationException();
     }
 
     @Override
-    public List<Room> getAll() throws SQLException, ServiceException {
+    public List<Room> getAll() throws ServiceException {
         Connection connection = ConnectionUtil.getConnection();
         List<Room> rooms = null;
         try {
@@ -46,20 +45,13 @@ public class RoomServiceImpl implements IRoomService{
             connection.commit();
             BookingSystemLogger.getInstance().logError(getClass(), Messages.TRANSACTION_SUCCEEDED);
         } catch (SQLException | DaoException e) {
-            try {
-                connection.rollback();
-                BookingSystemLogger.getInstance().logError(getClass(), Messages.TRANSACTION_FAILED);
-                throw new ServiceException(e.getMessage());
-            } catch (SQLException e1) {
-                BookingSystemLogger.getInstance().logError(getClass(), Messages.ROLLBACK_FAILED);
-                throw new ServiceException(e1.getMessage());
-            }
+            ExceptionHandler.getServiceHandler(connection, e, getClass());
         }
         return rooms;
     }
 
     @Override
-    public Room getById(long id) throws SQLException, ServiceException {
+    public Room getById(long id) throws ServiceException {
         Connection connection = ConnectionUtil.getConnection();
         Room room = null;
         try {
@@ -68,20 +60,13 @@ public class RoomServiceImpl implements IRoomService{
             connection.commit();
             BookingSystemLogger.getInstance().logError(getClass(), Messages.TRANSACTION_SUCCEEDED);
         } catch (SQLException | DaoException e) {
-            try {
-                connection.rollback();
-                BookingSystemLogger.getInstance().logError(getClass(), Messages.TRANSACTION_FAILED);
-                throw new ServiceException(e.getMessage());
-            } catch (SQLException e1) {
-                BookingSystemLogger.getInstance().logError(getClass(), Messages.ROLLBACK_FAILED);
-                throw new ServiceException(e1.getMessage());
-            }
+            ExceptionHandler.getServiceHandler(connection, e, getClass());
         }
         return room;
     }
 
     @Override
-    public void update(Room room) throws SQLException, ServiceException {
+    public void update(Room room) throws ServiceException {
         Connection connection = ConnectionUtil.getConnection();
         try {
             connection.setAutoCommit(false);
@@ -89,23 +74,16 @@ public class RoomServiceImpl implements IRoomService{
             connection.commit();
             BookingSystemLogger.getInstance().logError(getClass(), Messages.TRANSACTION_SUCCEEDED);
         } catch (SQLException | DaoException e) {
-            try {
-                connection.rollback();
-                BookingSystemLogger.getInstance().logError(getClass(), Messages.TRANSACTION_FAILED);
-                throw new ServiceException(e.getMessage());
-            } catch (SQLException e1) {
-                BookingSystemLogger.getInstance().logError(getClass(), Messages.ROLLBACK_FAILED);
-                throw new ServiceException(e1.getMessage());
-            }
+            ExceptionHandler.getServiceHandler(connection, e, getClass());
         }
     }
 
     @Override
-    public void delete(long id) throws SQLException, ServiceException {
+    public void delete(long id) throws ServiceException {
 
     }
 
-    public List<Room> getAvailableRooms(OrderDto orderDto) throws SQLException, ServiceException{
+    public List<Room> getAvailableRooms(OrderDto orderDto) throws ServiceException{
         Connection connection = ConnectionUtil.getConnection();
         List<Room> rooms = null;
         try {
@@ -114,19 +92,12 @@ public class RoomServiceImpl implements IRoomService{
             connection.commit();
             BookingSystemLogger.getInstance().logError(getClass(), Messages.TRANSACTION_SUCCEEDED);
         } catch (SQLException | DaoException e) {
-            try {
-                connection.rollback();
-                BookingSystemLogger.getInstance().logError(getClass(), Messages.TRANSACTION_FAILED);
-                throw new ServiceException(e.getMessage());
-            } catch (SQLException e1) {
-                BookingSystemLogger.getInstance().logError(getClass(), Messages.ROLLBACK_FAILED);
-                throw new ServiceException(e1.getMessage());
-            }
+            ExceptionHandler.getServiceHandler(connection, e, getClass());
         }
         return rooms;
     }
 
-    public List<Room> getByHotelId(long hotelId) throws SQLException, ServiceException{
+    public List<Room> getByHotelId(long hotelId) throws ServiceException{
         Connection connection = ConnectionUtil.getConnection();
         List<Room> rooms = null;
         try {
@@ -135,19 +106,12 @@ public class RoomServiceImpl implements IRoomService{
             connection.commit();
             BookingSystemLogger.getInstance().logError(getClass(), Messages.TRANSACTION_SUCCEEDED);
         } catch (SQLException | DaoException e) {
-            try {
-                connection.rollback();
-                BookingSystemLogger.getInstance().logError(getClass(), Messages.TRANSACTION_FAILED);
-                throw new ServiceException(e.getMessage());
-            } catch (SQLException e1) {
-                BookingSystemLogger.getInstance().logError(getClass(), Messages.ROLLBACK_FAILED);
-                throw new ServiceException(e1.getMessage());
-            }
+            ExceptionHandler.getServiceHandler(connection, e, getClass());
         }
         return rooms;
     }
 
-    public List<Room> getByBill(Bill bill) throws SQLException, ServiceException{
+    public List<Room> getByBill(Bill bill) throws ServiceException{
         Connection connection = ConnectionUtil.getConnection();
         List<Room> roomList = null;
         try {
@@ -156,27 +120,9 @@ public class RoomServiceImpl implements IRoomService{
             connection.commit();
             BookingSystemLogger.getInstance().logError(getClass(), Messages.TRANSACTION_SUCCEEDED);
         } catch (SQLException | DaoException e) {
-            try {
-                connection.rollback();
-                BookingSystemLogger.getInstance().logError(getClass(), Messages.TRANSACTION_FAILED);
-                throw new ServiceException(e.getMessage());
-            } catch (SQLException e1) {
-                BookingSystemLogger.getInstance().logError(getClass(), Messages.ROLLBACK_FAILED);
-                throw new ServiceException(e1.getMessage());
-            }
+            ExceptionHandler.getServiceHandler(connection, e, getClass());
         }
         return roomList;
-    }
-
-    private void checkException(Connection connection, Exception e) throws ServiceException {
-        try {
-            connection.rollback();
-            BookingSystemLogger.getInstance().logError(getClass(), Messages.TRANSACTION_FAILED);
-            throw new ServiceException(e.getMessage());
-        } catch (SQLException e1) {
-            BookingSystemLogger.getInstance().logError(getClass(), Messages.ROLLBACK_FAILED);
-            throw new ServiceException(e1.getMessage());
-        }
     }
 
 }
