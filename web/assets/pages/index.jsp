@@ -11,7 +11,8 @@
 	<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
 </head>
 <body onload="setLocale()">
-<%@include file="top.jsp"%>
+<%--<body>--%>
+<%@include file="inputs/top.jsp"%>
 <form name="findForm" method="POST" action="controller">
 	<input type="hidden" name="command" value="selectHotel"/>
 	<br/>
@@ -43,7 +44,7 @@
 		<option value="20">20</option>
 	</select>
 	<br/>
-	<label for="no_persons">${personsAmount}}</label>
+	<label for="no_persons">${personsAmount}</label>
 	<select id="no_persons" name="totalPersons">
 		<option value="1" selected="selected">1</option>
 		<option value="2">2</option>
@@ -79,8 +80,33 @@
 	<input type="hidden" name="command" value="setLocale"/>
 	<label for="language">Локаль</label>
 	<select id="language" name="language">
-		<option value="ru">RU</option>
-		<option value="en">EN</option>
+		<%--<c:choose>--%>
+			<%--<c:when test="${locale eq 'ru'}">--%>
+				<%--<option value="ru" selected="selected">RU</option>--%>
+			<%--</c:when>--%>
+			<%--<c:otherwise>--%>
+				<%--<option value="ru">RU</option>--%>
+			<%--</c:otherwise>--%>
+		<%--</c:choose>--%>
+		<%--<c:choose>--%>
+			<%--<c:when test="${locale eq 'en'}">--%>
+				<%--<option value="ru" selected="selected">EN</option>--%>
+			<%--</c:when>--%>
+			<%--<c:otherwise>--%>
+				<%--<option value="en">EN</option>--%>
+			<%--</c:otherwise>--%>
+		<%--</c:choose>--%>
+		<c:forEach var="lang" items="${langSet}">
+			<c:choose>
+				<c:when test="${locale eq lang}">
+					<option value=${lang} selected="selected">${lang}</option>
+				</c:when>
+				<c:otherwise>
+					<option value=${lang}>${lang}</option>
+				</c:otherwise>
+			</c:choose>
+		</c:forEach>
+
 	</select>
 	<input type="submit" value="Ввод">
 </form>

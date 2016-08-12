@@ -1,0 +1,11 @@
+# Created by .ignore support plugin (hsz.mobi)
+.idea/dataSources.local.xml
+.idea/workspace.xml
+dao/src/
+entities/src/
+out/
+services/src/
+src/main/
+src/test/
+web/WEB-INF/classes/
+web/src/

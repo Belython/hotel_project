@@ -10,7 +10,7 @@
     <title>Поиск номеров</title>
 </head>
 <body>
-<%@include file="../../../../assets/pages/top.jsp"%>
+<%@include file="../../../../assets/pages/inputs/top.jsp"%>
 
 <form name="searchForm" method="POST" action="controller">
     <input type="hidden" name="command" value="makeBill" />
