@@ -1,10 +1,10 @@
 # Created by .ignore support plugin (hsz.mobi)
 .idea/dataSources.local.xml
 .idea/workspace.xml
-dao/src/
-entities/src/
+by.kanarski.booking.dao/src/
+by.kanarski.booking.entities/src/
 out/
-services/src/
+by.kanarski.booking.services/src/
 src/main/
 src/test/
 web/WEB-INF/classes/

@@ -3,9 +3,9 @@
     <option name="BROWSER_ID" value="a7bb68e0-33c0-4d6f-a81a-aac1fdb870c8" />
     <option name="UPDATING_POLICY" value="restart-server" />
     <deployment>
-      <artifact name="hotel_project:war exploded">
+      <artifact name="web:war">
         <settings>
-          <option name="CONTEXT_PATH" value="/hotel_project" />
+          <option name="CONTEXT_PATH" value="/" />
         </settings>
       </artifact>
     </deployment>
@@ -69,7 +69,7 @@
     </ConfigurationWrapper>
     <method>
       <option name="BuildArtifacts" enabled="true">
-        <artifact name="hotel_project:war exploded" />
+        <artifact name="web:war" />
       </option>
     </method>
   </configuration>

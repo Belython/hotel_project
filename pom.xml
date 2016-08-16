@@ -1,10 +1,10 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<project xmlns="http://maven.apache.org/POM/4.0.0"
-         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+<project xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xmlns="http://maven.apache.org/POM/4.0.0"
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
     <modelVersion>4.0.0</modelVersion>
 
-    <groupId>by.booking</groupId>
+    <groupId>by.kanarski</groupId>
     <artifactId>booking</artifactId>
     <packaging>pom</packaging>
     <version>1.0</version>
@@ -13,7 +13,7 @@
         <dependencies>
             <!-- JSTL -->
             <dependency>
-                <groupId>javax.servlet</groupId>
+                <groupId>jstl</groupId>
                 <artifactId>jstl</artifactId>
                 <version>1.2</version>
             </dependency>
@@ -39,7 +39,7 @@
                 <version>3.1.0</version>
             </dependency>
 
-            <!-- c3p0 -->
+            <!-- Pool -->
             <dependency>
                 <groupId>com.mchange</groupId>
                 <artifactId>c3p0</artifactId>
@@ -53,7 +53,6 @@
                 <version>4.12</version>
                 <scope>test</scope>
             </dependency>
-
         </dependencies>
     </dependencyManagement>
 
@@ -66,9 +65,11 @@
 
     <properties>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+        <maven.compiler.source>1.8</maven.compiler.source>
+        <maven.compiler.target>1.8</maven.compiler.target>
     </properties>
 
     <name>booking</name>
     <url>http://maven.apache.org</url>
-    
+
 </project>
