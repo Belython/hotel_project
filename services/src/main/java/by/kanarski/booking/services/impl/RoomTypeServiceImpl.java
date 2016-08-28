@@ -1,14 +1,14 @@
 package by.kanarski.booking.services.impl;
 
 import by.kanarski.booking.constants.Messages;
-import by.kanarski.booking.utils.BookingSystemLogger;
-import by.kanarski.booking.utils.ConnectionUtil;
-import by.kanarski.booking.utils.ExceptionHandler;
 import by.kanarski.booking.dao.impl.RoomTypeDao;
 import by.kanarski.booking.entities.RoomType;
 import by.kanarski.booking.exceptions.DaoException;
 import by.kanarski.booking.exceptions.ServiceException;
 import by.kanarski.booking.services.interfaces.IRoomTypeService;
+import by.kanarski.booking.utils.BookingSystemLogger;
+import by.kanarski.booking.utils.ConnectionUtil;
+import by.kanarski.booking.utils.ExceptionHandler;
 
 import java.sql.Connection;
 import java.sql.SQLException;

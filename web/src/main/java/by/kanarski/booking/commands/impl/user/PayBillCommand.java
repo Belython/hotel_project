@@ -1,10 +1,10 @@
 package by.kanarski.booking.commands.impl.user;
 
+import by.kanarski.booking.commands.ICommand;
 import by.kanarski.booking.constants.MessageConstants;
 import by.kanarski.booking.constants.PagePath;
 import by.kanarski.booking.constants.Parameter;
 import by.kanarski.booking.constants.Statuses;
-import by.kanarski.booking.commands.ICommand;
 import by.kanarski.booking.entities.Bill;
 import by.kanarski.booking.entities.User;
 import by.kanarski.booking.exceptions.ServiceException;

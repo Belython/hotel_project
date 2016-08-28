@@ -1,13 +1,11 @@
 package by.kanarski.booking.commands.impl.user;
 
+import by.kanarski.booking.commands.ICommand;
 import by.kanarski.booking.constants.PagePath;
 import by.kanarski.booking.constants.Parameter;
 import by.kanarski.booking.constants.SessionAttribute;
-import by.kanarski.booking.utils.RequestParameterParser;
-import by.kanarski.booking.commands.ICommand;
-import by.kanarski.booking.i18n.l10n.fillers.IFiller;
-import by.kanarski.booking.i18n.l10n.fillers.factory.FillerFactory;
 import by.kanarski.booking.requestHandler.ServletAction;
+import by.kanarski.booking.utils.RequestParameterParser;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;

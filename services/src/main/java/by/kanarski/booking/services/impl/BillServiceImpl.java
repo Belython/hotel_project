@@ -1,10 +1,6 @@
 package by.kanarski.booking.services.impl;
 
 import by.kanarski.booking.constants.Messages;
-import by.kanarski.booking.utils.BookingSystemLogger;
-import by.kanarski.booking.utils.ConnectionUtil;
-import by.kanarski.booking.utils.EntityBuilder;
-import by.kanarski.booking.utils.ExceptionHandler;
 import by.kanarski.booking.dao.impl.BillDao;
 import by.kanarski.booking.dao.impl.RoomDao;
 import by.kanarski.booking.entities.Bill;
@@ -12,6 +8,10 @@ import by.kanarski.booking.entities.Room;
 import by.kanarski.booking.exceptions.DaoException;
 import by.kanarski.booking.exceptions.ServiceException;
 import by.kanarski.booking.services.interfaces.IBillService;
+import by.kanarski.booking.utils.BookingSystemLogger;
+import by.kanarski.booking.utils.ConnectionUtil;
+import by.kanarski.booking.utils.EntityBuilder;
+import by.kanarski.booking.utils.ExceptionHandler;
 
 import java.sql.Connection;
 import java.sql.SQLException;

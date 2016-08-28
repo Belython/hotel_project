@@ -1,10 +1,11 @@
 package by.kanarski.booking.dto;
 
 import by.kanarski.booking.constants.Statuses;
-import by.kanarski.booking.utils.EntityBuilder;
 import by.kanarski.booking.entities.Hotel;
 import by.kanarski.booking.entities.Room;
 import by.kanarski.booking.entities.RoomType;
+import by.kanarski.booking.utils.EntityBuilder;
+
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;

@@ -1,8 +1,8 @@
 package by.kanarski.booking.filters;
 
+import by.kanarski.booking.commands.factory.CommandType;
 import by.kanarski.booking.constants.PagePath;
 import by.kanarski.booking.utils.RequestParameterParser;
-import by.kanarski.booking.commands.factory.CommandType;
 
 import javax.servlet.*;
 import javax.servlet.http.HttpServletRequest;

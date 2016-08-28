@@ -2,10 +2,14 @@ package by.kanarski.booking.dao.impl;
 
 import by.kanarski.booking.constants.ColumnName;
 import by.kanarski.booking.constants.Messages;
-import by.kanarski.booking.utils.*;
 import by.kanarski.booking.dao.interfaces.IUserDao;
 import by.kanarski.booking.entities.User;
 import by.kanarski.booking.exceptions.DaoException;
+import by.kanarski.booking.utils.BookingSystemLogger;
+import by.kanarski.booking.utils.ClosingUtil;
+import by.kanarski.booking.utils.ConnectionUtil;
+import by.kanarski.booking.utils.EntityParser;
+
 import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;

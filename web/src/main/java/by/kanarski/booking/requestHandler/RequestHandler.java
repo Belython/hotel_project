@@ -1,9 +1,8 @@
 package by.kanarski.booking.requestHandler;
 
-import by.kanarski.booking.constants.PagePath;
-import by.kanarski.booking.constants.Parameter;
 import by.kanarski.booking.commands.ICommand;
 import by.kanarski.booking.commands.factory.CommandFactory;
+import by.kanarski.booking.constants.Parameter;
 import by.kanarski.booking.i18n.l10n.fillers.IFiller;
 import by.kanarski.booking.i18n.l10n.fillers.factory.FillerFactory;
 

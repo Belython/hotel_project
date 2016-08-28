@@ -1,9 +1,9 @@
 package by.kanarski.booking.commands.impl.user;
 
+import by.kanarski.booking.commands.ICommand;
 import by.kanarski.booking.constants.MessageConstants;
 import by.kanarski.booking.constants.PagePath;
 import by.kanarski.booking.constants.Parameter;
-import by.kanarski.booking.commands.ICommand;
 import by.kanarski.booking.dto.HotelDto;
 import by.kanarski.booking.entities.Hotel;
 import by.kanarski.booking.entities.Room;

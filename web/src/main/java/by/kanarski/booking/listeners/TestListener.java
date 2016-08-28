@@ -4,10 +4,8 @@ import by.kanarski.booking.constants.PageTextContentName;
 import by.kanarski.booking.constants.ResourcePath;
 import by.kanarski.booking.constants.SessionAttribute;
 
-import javax.servlet.ServletRequest;
 import javax.servlet.ServletRequestAttributeEvent;
 import javax.servlet.ServletRequestAttributeListener;
-import javax.servlet.ServletRequestListener;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 import java.util.Locale;

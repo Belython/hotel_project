@@ -1,7 +1,7 @@
 package by.kanarski.booking.utils;
 
-import by.kanarski.booking.constants.Parameter;
 import by.kanarski.booking.commands.factory.CommandType;
+import by.kanarski.booking.constants.Parameter;
 import by.kanarski.booking.dto.HotelDto;
 import by.kanarski.booking.dto.OrderDto;
 import by.kanarski.booking.entities.*;

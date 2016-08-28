@@ -1,8 +1,8 @@
 package by.kanarski.booking.commands.factory;
 
-import by.kanarski.booking.utils.RequestParameterParser;
 import by.kanarski.booking.commands.ICommand;
 import by.kanarski.booking.commands.impl.user.LoginUserCommand;
+import by.kanarski.booking.utils.RequestParameterParser;
 
 import javax.servlet.http.HttpServletRequest;
 
